@@ -1,0 +1,41 @@
+# Generated output; preserve directory placeholders.
+*.log
+/logs/*
+!/logs/.gitkeep
+/backup/*
+!/backup/.gitkeep
+
+# Local environment and credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+credentials/
+.aws/
+.ssh/
+.codex/
+.agents/
+
+# Python.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary and editor files.
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.DS_Store

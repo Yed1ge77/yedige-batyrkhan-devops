@@ -1,0 +1,14 @@
+.git
+.aws
+.ssh
+.codex
+.agents
+.env
+.env.*
+**/__pycache__
+**/*.pyc
+**/*.key
+**/*.pem
+logs
+backup
+private.txt

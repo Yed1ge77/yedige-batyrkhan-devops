@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    image: yedige-batyrkhan-devops
+    container_name: yedige-batyrkhan-container
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8000"
+      APP_ENV: "${APP_ENV:-production}"
+      STUDENT_NAME: "${STUDENT_NAME:-Batyrkhan}"
+      STUDENT_SURNAME: "${STUDENT_SURNAME:-Yedige}"
+      STUDENT_GROUP: "${STUDENT_GROUP:-IT2-2302}"
+      STUDENT_ID: "${STUDENT_ID:-38419}"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
