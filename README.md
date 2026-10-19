@@ -12,7 +12,9 @@ DevOps Laboratory Work 1: Linux fundamentals and a Python HTTP application.
 | University | IITU |
 | Course | DevOps |
 
-These details are stored in `config/student_info.json`. This phase is local only.
+These details are stored in `config/student_info.json`.
+Repository: https://github.com/Yed1ge77/yedige-batyrkhan-devops.
+Further pushes require explicit approval.
 Do not add passwords, tokens, or private keys. Before a future public push,
 review all files and Git history for secrets and obtain permission to publish.
 
@@ -49,7 +51,7 @@ devops-lab/
 - Ubuntu 24.04 / WSL2, Bash, and standard Linux commands (`ps`, `find`, `grep`, etc.).
 - Python 3.12. No external Python libraries.
 - `curl` for optional manual HTTP checks.
-- Docker and Jenkins are not needed for this phase.
+- Docker Engine and Compose for containers; Jenkins with Pipeline/Git plugins for CI.
 
 ## Run the application
 
@@ -69,7 +71,7 @@ APP_ENV=lab HOST=127.0.0.1 PORT=8001 python3 -m app.main
 
 `APP_ENV` defaults to `development`. `HOST` defaults to `127.0.0.1` for local use.
 `PORT` defaults to `8000` and must be an integer from 1 to 65535.
-A future container will use `HOST=0.0.0.0` to accept connections through its mapped port.
+The container uses `HOST=0.0.0.0` to accept connections through its mapped port.
 Environment values are read at startup. Restart the app after changing them.
 
 In a second terminal, check the default server:
@@ -188,27 +190,22 @@ and press Ctrl+C. Only stop the process you started for this exercise.
 - **Required file check fails:** read the `MISSING` line and restore that item.
 - **Demo cannot create a temporary folder:** check that `logs/` exists and is writable.
 
-## Later phases: Git, Docker, and Jenkins
+## Verification and submission
 
-No Git workflow or external publication is performed in this phase.
-After approval, initialize Git, make a baseline commit on `main`, and create
-`development`. Add meaningful commits for improvements, then merge reviewed
-work into `main`. Aim for at least five real milestones across the lab:
-Linux setup, Python application, tests/docs, Docker/Compose, and Jenkins.
-Do not create empty commits just to reach a number.
+Run `./scripts/verify.sh` for unit tests, Python compilation and Bash checks.
+Run `sudo bash scripts/docker_verify.sh` in your normal Ubuntu terminal when
+Docker needs sudo. This builds an isolated image, tests real HTTP responses
+and the container user, and removes only its temporary container.
 
-A future Dockerfile will copy `app/` and `config/` and run
-`python3 -m app.main`. Compose will supply environment variables and map ports.
-A future Jenkinsfile will contain Checkout, Build, Test, Docker Build, and
-Docker Run stages. Tests use exit codes, so Jenkins can detect failures.
-GitHub setup, Docker files, Jenkins changes, commits, and pushes are later work.
-Publishing requires a secret review and explicit approval.
-
+See [submission checklist and PDF evidence](docs/SUBMISSION.md) and
+[15-minute video script](docs/VIDEO.md). Jenkins preparation is available with
+`python3 scripts/jenkins_job.py`; credentials are prompted without echo.
+No successful Jenkins build is assumed until the helper reports SUCCESS.
 
 ## Submission demonstration: instructor names
 
 Project directory: `~/devops/yedige_batyrkhan`.
-Planned GitHub name: `yedige-batyrkhan-devops` (publication needs approval).
+GitHub repository name: `yedige-batyrkhan-devops` (publication needs approval).
 Student text file: `Yedige_Batyrkhan_info.txt`.
 The original JSON configuration remains the Python application's default data.
 
@@ -249,33 +246,22 @@ original JSON values remain unchanged. Example:
 STUDENT_NAME=Batyrkhan STUDENT_SURNAME=Yedige STUDENT_GROUP=IT2-2302 STUDENT_ID=38419 python3 -m app.main
 ```
 
-### Local Git demonstration (after review and authorization)
+### Local Git workflow
 
-No commits or pushes were made while preparing these deliverables. Review the
-staging list before committing. Do not add generated logs or credentials.
+`main` and `development` already exist. Preserve the published initial commit.
+Make useful changes on `development`, run tests before each descriptive commit,
+and merge reviewed work into `main`. Do not create empty commits or rewrite history.
 
 ```bash
 git status --short --branch
-git diff
-git add .gitignore .dockerignore README.md Yedige_Batyrkhan_info.txt app scripts config tests logs/.gitkeep backup/.gitkeep private.txt public.txt Dockerfile docker-compose.yml Jenkinsfile
-git diff --cached --stat
-git diff --cached
-git commit -m "Add tested Linux application and container pipeline deliverables"
-git switch -c development
-```
-
-Make further commits only for real changes. After a tested development change:
-
-```bash
-git switch main
-git merge development
+git diff --check
 git log --graph --oneline --decorate --all
-git branch -v
-git status --short
+git branch -vv
+git rev-list --count main
 ```
 
-Do not invent five historical commits. Future tested improvements can provide
-additional milestones. Review files and history for secrets before any push.
+Never commit logs, backups, credentials or `.env` files. Review the staged diff
+before commits. Push only after explicit approval and a secret review.
 
 ### Docker (normal Ubuntu terminal)
 
@@ -314,7 +300,7 @@ SCM, choose Git, set an approved repository URL/path, branch `*/main`, and scrip
 path `Jenkinsfile`. Save and run Build Now. A real committed SCM source is needed
 for `checkout scm`; this will not run as an unconfigured inline pipeline.
 Local Git paths may be restricted by Jenkins; use an approved SCM source rather
-than disabling Jenkins security. GitHub setup remains a later authorized step.
+than disabling Jenkins security. The repository already exists; additional pushes still require approval.
 
 The Jenkins agent needs Python 3, Bash, Git, Docker CLI, and authorized Docker
 daemon access. Your user's sudo access does not give access to Jenkins. This

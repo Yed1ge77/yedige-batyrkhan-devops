@@ -10,7 +10,7 @@ services:
       PORT: "8000"
       APP_ENV: "${APP_ENV:-production}"
       STUDENT_NAME: "${STUDENT_NAME:-Batyrkhan}"
-      STUDENT_SURNAME: "${STUDENT_SURNAME:-Yedige}"
+      STUDENT_SURNAME: "${STUDENT_SURNAME:-Yedige Yerlanuly}"
       STUDENT_GROUP: "${STUDENT_GROUP:-IT2-2302}"
       STUDENT_ID: "${STUDENT_ID:-38419}"
     healthcheck:
