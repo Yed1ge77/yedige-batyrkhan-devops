@@ -7,10 +7,19 @@ pipeline {
     }
     environment {
         IMAGE_NAME = 'yedige-batyrkhan-devops'
+        STUDENT_NAME = 'Batyrkhan'
+        STUDENT_SURNAME = 'Yedige Yerlanuly'
+        STUDENT_GROUP = 'IT2-2302'
+        STUDENT_ID = '38419'
     }
     stages {
         stage('Checkout') {
-            steps { checkout scm }
+            steps {
+                checkout scm
+                echo "Student: ${env.STUDENT_NAME} ${env.STUDENT_SURNAME}"
+                echo "Group: ${env.STUDENT_GROUP}"
+                echo "Student ID: ${env.STUDENT_ID}"
+            }
         }
         stage('Build') {
             steps {
